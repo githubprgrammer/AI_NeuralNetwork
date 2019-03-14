@@ -16,13 +16,16 @@ def build_network(num_inputs, num_hidden, num_outputs):
 # The logistic function.
 # Should return a vector/matrix with the same dimensions as x.
 def sigmoid(x):
-    pass # To be implemented
+    return 1/(1+ np.exp(x))
 
+vec = np.arange(0,11)
+print(vec)
+print(sigmoid(vec))
 
 # the derivative of the activation function
 # implementing an using this might lead to a more readable code
 def d_sigmoid(x):
-    pass # optionally
+    return x*(1-x)
 
 
 
