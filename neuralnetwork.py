@@ -18,9 +18,6 @@ def build_network(num_inputs, num_hidden, num_outputs):
 def sigmoid(x):
     return 1/(1+ np.exp(x))
 
-vec = np.arange(0,11)
-print(vec)
-print(sigmoid(vec))
 
 # the derivative of the activation function
 # implementing an using this might lead to a more readable code
@@ -32,7 +29,11 @@ def d_sigmoid(x):
 # calculate networks output given input X
 # returns for each sample in X the corresponding network's output y_hat
 def forward_propagate(network, X):
-    y_hat = None # To be implemented
+    W1 = network['W1']
+    W2 = network['W2']
+    B1 = network['B1']
+    B2 = network['B2']
+    y_hat = sigmoid(sigmoid(X@W1 + B1)@W2 + B2)
     return y_hat
 
 
@@ -41,21 +42,21 @@ def forward_propagate(network, X):
 def cost(network, dataset):
     X = dataset['X']
     Y = dataset['Y']
-    mse = None # To be implemented
+    y_hat = forward_propagate(network, X)
+    n = len(X)
+    mse = (1/2*n) * np.mean((y_hat - Y)**2)
     return mse
 
 
 def train(network, dataset, max_epochs):
     # the dataset is a list of inputs and targets
-    # and is accessed like this
     X = dataset['X']
     Y = dataset['Y']
 
-    # access parameters of the network like this
-    network['W1']
-    network['B1']
-    network['W2']
-    network['B2']
+    W1 = network['W1']
+    B1 = network['B1']
+    W2 = network['W2']
+    B2 = network['B2']
 
     for epoch in np.arange(0,max_epochs):
 
@@ -144,6 +145,7 @@ def plot_summary(net, dataset):
 
 network = build_network(2, 4, 1)
 trainset = dataset_blobs
+print(cost(network, trainset))
 network = train(network, trainset, 1000)
 plot_summary(network, trainset)
 
